@@ -37,7 +37,9 @@
     <header class="header">
         <nav class="nav-container">
             <div class="nav-brand">
-                <a href="#home" class="brand-link">Mihto Oota</a>
+                <a href="#home" class="brand-link">
+                    <img src="./images/headerlogo.png" alt="Mihto Oota" class="brand-logo">
+                </a>
             </div>
             <ul class="nav-list">
                 <li class="nav-item">
@@ -61,29 +63,60 @@
         </nav>
     </header>
 
-    <!-- HEROセクション -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="hero-accent">Mihito Oota</span><br>Portfolio
-                </h1>
-                <p class="hero-subtitle">
-                    会社員3年・経営者5年・在宅経験1年〜
-                </p>
-                <p class="hero-description">
-                    Web制作を軸に、ライティングや英語業務を含む多様な実務経験を活かし、<br>
-                    柔軟に対応いたします。
-                </p>
-                <div class="hero-actions">
-                    <a href="#works" class="btn btn-primary">My Works</a>
-                    <a href="#about" class="btn btn-outline">About Me</a>
+    <!-- HEROセクション - パララックス効果 -->
+    <section id="home" class="parallax-hero-section">
+        <div class="parallax-background">
+            <img src="./images/HERObg2.png" alt="Background Flowers" class="bg-image" id="bgImage">
+            <div class="bg-overlay" id="bgOverlay"></div>
+        </div>
+        
+        <div class="parallax-container">
+            <div class="parallax-content">
+                <!-- メディアコンテナ -->
+                <div class="media-container" id="mediaContainer">
+                    <video 
+                        src="./images/7814679-uhd_2160_3840_30fps.mp4" 
+                        autoplay 
+                        muted 
+                        loop 
+                        playsinline 
+                        class="hero-video"
+                        id="heroVideo"
+                    ></video>
+                    <div class="media-overlay" id="mediaOverlay"></div>
+                </div>
+                
+                <!-- タイトルテキスト -->
+                <div class="title-container">
+                    <h1 class="parallax-title-left" id="titleLeft">Creative</h1>
+                    <h1 class="parallax-title-right" id="titleRight">Portfolio</h1>
+                </div>
+                
+                <!-- サブテキスト -->
+                <div class="subtitle-container">
+                    <p class="parallax-subtitle-left" id="subtitleLeft">Mihito Oota</p>
+                    <p class="parallax-subtitle-right" id="subtitleRight">Scroll to Expand</p>
                 </div>
             </div>
-        </div>
-        <div class="hero-scroll-indicator">
-            <span class="scroll-text">Scroll Down</span>
-            <div class="scroll-arrow"></div>
+            
+            <!-- コンテンツセクション -->
+            <div class="content-section" id="contentSection">
+                <div class="content-inner">
+                    <h2 class="content-title">Web Developer & Creative Designer</h2>
+                    <p class="content-text">
+                        Web制作を軸に、ライティングや英語業務を含む多様な実務経験を活かし、<br>
+                        フリーランスとして活動しています。
+                    </p>
+                    <p class="content-text">
+                        会社員3年・経営者5年・在宅経験1年〜の経験を通じて培った<br>
+                        多角的な視点で、お客様のニーズに柔軟に対応いたします。
+                    </p>
+                    <!-- <div class="hero-actions">
+                    <a href="#works" class="btn btn-primary">My Works</a>
+                    <a href="#about" class="btn btn-outline">About Me</a>
+                    </div> -->
+                </div>
+            </div>
         </div>
     </section>
 
@@ -98,6 +131,25 @@
             </div>
             
             <div class="works-grid">
+                <article class="work-card">
+                    <div class="work-image">
+                        <img src="./images/串かつ.png" alt="串かつ さじろう様 ホームページリニューアル" loading="lazy" style="object-position: center top;">
+                        <div class="work-overlay">
+                            <a href="./work9.html" class="work-link">詳細を見る</a>
+                        </div>
+                    </div>
+                    <div class="work-content">
+                        <h3 class="work-title">串かつ さじろう様<br>ホームページリニューアル</h3>
+                        <p class="work-description">トップページ含む全6ページをフルスタック〜CMS化まで実装</p>
+                        <div class="work-tags">
+                            <span class="tag">Web制作</span>
+                            <span class="tag">WordPress</span>
+                            <span class="tag">フルスタック</span>
+                            <span class="tag">PHP</span>
+                        </div>
+                    </div>
+                </article>
+
                 <article class="work-card">
                     <div class="work-image">
                         <img src="./images/Screenshot 2025-05-07 at 17.59.08.png" alt="ぎふ就労支援センター様 ホームページリニューアル" loading="lazy">
@@ -341,41 +393,13 @@
                                         <h6 style="font-size: 1rem; font-weight: 600; margin: 1.2em 0 0.8em 0; color: #2563eb; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.3em;">主な実績</h6>
                                         
                                         <div class="project-item" style="margin-bottom: 1.5em; padding: 1em; background: #f8fafc; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                            <h7 style="font-weight: 600; color: #1e40af; display: block; margin-bottom: 0.5em;">飲食店HP リニューアル</h7>
-                                            <a href="https://kushikatsu.sajiro.fun/" target="_blank" style="color: #2563eb; text-decoration: underline; font-size: 0.9em; display: block; margin-bottom: 0.8em;">https://kushikatsu.sajiro.fun/</a>
-                                            <ul style="margin: 0.5em 0; padding-left: 1.2em; font-size: 0.9em; line-height: 1.6;">
-                                                <li>トップページ含む全6ページをフルスタック実装まで担当</li>
-                                                <li>コーディング（HTML/CSS/JavaScript/php）→ WordPress化</li>
-                                                <li>PHPによるカスタム投稿・ヘッダー構築、SEO内部構造を実装</li>
-                                                <li>レスポンシブ設計、フォーム、Googleマップ連携、更新可能なCMS設計</li>
+                                            <ul style="margin: 0.5em 0; padding-left: 1.2em; font-size: 0.9em; line-height: 1.8;">
+                                                <li>飲食店HPリニューアル</li>
+                                                <li>個人副業ブログリニューアル</li>
+                                                <li>空き家 掃除LP 差し替え</li>
+                                                <li>企業HP ノーコードツール</li>
                                             </ul>
-                                        </div>
-                                        
-                                        <!-- <div class="project-item" style="margin-bottom: 1.5em; padding: 1em; background: #f8fafc; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                            <h7 style="font-weight: 600; color: #1e40af; display: block; margin-bottom: 0.5em;">企業HP制作（Studio使用｜3日間で納品）</h7>
-                                            <a href="https://preview.studio.site/live/YPqrpJpAW5/" target="_blank" style="color: #2563eb; text-decoration: underline; font-size: 0.9em; display: block; margin-bottom: 0.8em;">https://preview.studio.site/live/YPqrpJpAW5/</a>
-                                            <ul style="margin: 0.5em 0; padding-left: 1.2em; font-size: 0.9em; line-height: 1.6;">
-                                                <li>企業から提供された情報を要約・編集し、サイト構成に落とし込み</li>
-                                                <li>Studioを用いた迅速な構築（3日間）</li>
-                                                <li>最小限の情報でも訴求できるよう、シンプルかつ明瞭なデザインを意識</li>
-                                            </ul>
-                                        </div> -->
-                                        
-                                        <div class="project-item" style="margin-bottom: 1.5em; padding: 1em; background: #f8fafc; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                            <h7 style="font-weight: 600; color: #1e40af; display: block; margin-bottom: 0.5em;">空き家バンクLP制作</h7>
-                                            <ul style="margin: 0.5em 0; padding-left: 1.2em; font-size: 0.9em; line-height: 1.6;">
-                                                <li>FV差し替え作業　イメージコーディングをテキストコーディング化</li>
-                                                <li>PHPにて新デザインにリニューアル</li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="project-item" style="margin-bottom: 1.5em; padding: 1em; background: #f8fafc; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                            <h7 style="font-weight: 600; color: #1e40af; display: block; margin-bottom: 0.5em;">個人ブログ全面リニューアル（WordPress）</h7>
-                                            <ul style="margin: 0.5em 0; padding-left: 1.2em; font-size: 0.9em; line-height: 1.6;">
-                                                <li>旧テーマから新デザインへ刷新</li>
-                                                <li>ロゴ制作、3日で納品</li>
-                                                <li>結果として月間PVの増加に寄与</li>
-                                            </ul>
+                                            <p style="margin-top: 1em; font-size: 0.9em; color: #64748b; text-align: center;">など多様な案件を引き受けています</p>
                                         </div>
                                         
                                         <div class="project-item" style="margin-bottom: 1em; padding: 1em; background: #fef3c7; border-radius: 8px; border-left: 4px solid #f59e0b;">

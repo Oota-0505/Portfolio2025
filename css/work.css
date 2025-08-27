@@ -121,7 +121,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-4) var(--space-8);
   max-width: 1200px;
   margin: 0 auto;
 }

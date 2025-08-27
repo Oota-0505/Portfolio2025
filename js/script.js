@@ -436,3 +436,238 @@ function debounce(func, wait, immediate) {
     };
 }
 
+// パララックスヒーロー効果の実装
+class ParallaxHero {
+    constructor() {
+        this.scrollProgress = 0;
+        this.mediaFullyExpanded = false;
+        this.showContent = false;
+        this.touchStartY = 0;
+        this.isMobile = window.innerWidth < 768;
+        this.isNavigating = false;
+        
+        this.elements = {
+            bgImage: document.getElementById('bgImage'),
+            bgOverlay: document.getElementById('bgOverlay'),
+            mediaContainer: document.getElementById('mediaContainer'),
+            heroVideo: document.getElementById('heroVideo'),
+            mediaOverlay: document.getElementById('mediaOverlay'),
+            titleLeft: document.getElementById('titleLeft'),
+            titleRight: document.getElementById('titleRight'),
+            subtitleLeft: document.getElementById('subtitleLeft'),
+            subtitleRight: document.getElementById('subtitleRight'),
+            contentSection: document.getElementById('contentSection')
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.updateElements();
+    }
+    
+    bindEvents() {
+        // ホイールイベント
+        window.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false });
+        
+        // タッチイベント
+        window.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
+        window.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
+        window.addEventListener('touchend', () => this.handleTouchEnd());
+        
+        // スクロールイベント
+        window.addEventListener('scroll', () => this.handleScroll());
+        
+        // リサイズイベント
+        window.addEventListener('resize', () => {
+            this.isMobile = window.innerWidth < 768;
+        });
+    }
+    
+    handleWheel(e) {
+        if (this.mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
+            this.mediaFullyExpanded = false;
+            e.preventDefault();
+        } else if (!this.mediaFullyExpanded) {
+            e.preventDefault();
+            const scrollDelta = e.deltaY * 0.0009;
+            this.updateProgress(scrollDelta);
+        }
+    }
+    
+    handleTouchStart(e) {
+        this.touchStartY = e.touches[0].clientY;
+    }
+    
+    handleTouchMove(e) {
+        if (!this.touchStartY) return;
+        
+        const touchY = e.touches[0].clientY;
+        const deltaY = this.touchStartY - touchY;
+        
+        if (this.mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
+            this.mediaFullyExpanded = false;
+            e.preventDefault();
+        } else if (!this.mediaFullyExpanded) {
+            e.preventDefault();
+            const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
+            const scrollDelta = deltaY * scrollFactor;
+            this.updateProgress(scrollDelta);
+            this.touchStartY = touchY;
+        }
+    }
+    
+    handleTouchEnd() {
+        this.touchStartY = 0;
+    }
+    
+    handleScroll() {
+        // ナビゲーション中またはページの下部にいる場合は処理をスキップ
+        if (this.isNavigating || window.scrollY > window.innerHeight) {
+            return;
+        }
+        
+        if (!this.mediaFullyExpanded) {
+            window.scrollTo(0, 0);
+        }
+    }
+    
+    updateProgress(delta) {
+        const newProgress = Math.min(Math.max(this.scrollProgress + delta, 0), 1);
+        this.scrollProgress = newProgress;
+        
+        if (newProgress >= 1) {
+            this.mediaFullyExpanded = true;
+            this.showContent = true;
+        } else if (newProgress < 0.75) {
+            this.showContent = false;
+        }
+        
+        this.updateElements();
+    }
+    
+    updateElements() {
+        const progress = this.scrollProgress;
+        const isMobile = this.isMobile;
+        
+        // メディアコンテナのサイズ変更
+        const mediaWidth = 300 + progress * (isMobile ? 650 : 1250);
+        const mediaHeight = 400 + progress * (isMobile ? 200 : 400);
+        
+        if (this.elements.mediaContainer) {
+            this.elements.mediaContainer.style.width = `${Math.min(mediaWidth, window.innerWidth * 0.95)}px`;
+            this.elements.mediaContainer.style.height = `${Math.min(mediaHeight, window.innerHeight * 0.85)}px`;
+        }
+        
+        // 背景画像のフェード
+        if (this.elements.bgOverlay) {
+            this.elements.bgOverlay.style.opacity = progress;
+        }
+        
+        // メディアオーバーレイのフェード
+        if (this.elements.mediaOverlay) {
+            this.elements.mediaOverlay.style.opacity = 0.4 - progress * 0.4;
+        }
+        
+        // テキストの移動
+        const textTranslateX = progress * (isMobile ? 180 : 150);
+        
+        if (this.elements.titleLeft) {
+            this.elements.titleLeft.style.transform = `translateX(-${textTranslateX}vw)`;
+        }
+        
+        if (this.elements.titleRight) {
+            this.elements.titleRight.style.transform = `translateX(${textTranslateX}vw)`;
+        }
+        
+        if (this.elements.subtitleLeft) {
+            this.elements.subtitleLeft.style.transform = `translateX(-${textTranslateX}vw)`;
+        }
+        
+        if (this.elements.subtitleRight) {
+            this.elements.subtitleRight.style.transform = `translateX(${textTranslateX}vw)`;
+        }
+        
+        // コンテンツの表示
+        if (this.elements.contentSection) {
+            if (this.showContent) {
+                this.elements.contentSection.classList.add('visible');
+            } else {
+                this.elements.contentSection.classList.remove('visible');
+            }
+        }
+    }
+}
+
+// DOMが読み込まれたらパララックスヒーローを初期化
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.parallax-hero-section')) {
+        window.parallaxHeroInstance = new ParallaxHero();
+    }
+    
+    // スムーズスクロール機能
+    function smoothScrollTo(targetId) {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            // パララックス効果のナビゲーション状態を設定
+            const parallaxHero = window.parallaxHeroInstance;
+            if (parallaxHero) {
+                parallaxHero.isNavigating = true;
+                parallaxHero.mediaFullyExpanded = true;
+                parallaxHero.showContent = true;
+                parallaxHero.updateElements();
+            }
+            
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const targetPosition = targetElement.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            // ナビゲーション完了後にフラグをリセット
+            setTimeout(() => {
+                if (parallaxHero) {
+                    parallaxHero.isNavigating = false;
+                }
+            }, 1000);
+        }
+    }
+    
+    // ハッシュリンクの処理
+    function handleHashLinks() {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            setTimeout(() => {
+                smoothScrollTo(hash);
+            }, 100);
+        }
+    }
+    
+    // ページロード時のハッシュ処理
+    handleHashLinks();
+    
+    // ハッシュ変更時の処理
+    window.addEventListener('hashchange', handleHashLinks);
+    
+    // ナビゲーションリンクのクリック処理
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href*="#"]');
+        if (link) {
+            const href = link.getAttribute('href');
+            const hashIndex = href.indexOf('#');
+            if (hashIndex !== -1) {
+                const hash = href.substring(hashIndex + 1);
+                const targetElement = document.getElementById(hash);
+                if (targetElement && (window.location.pathname === '/index.html' || window.location.pathname === '/' || href.startsWith('index.html'))) {
+                    e.preventDefault();
+                    smoothScrollTo(hash);
+                    window.history.pushState(null, null, '#' + hash);
+                }
+            }
+        }
+    });
+});
+
