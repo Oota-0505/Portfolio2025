@@ -220,60 +220,46 @@ window.addEventListener('DOMContentLoaded', () => {
 // ===== Other Works（全workページ共通）自動生成 =====
 const workList = [
   {
+    id: 'work9.html',
+    title: '串かつ さじろう様<br>リニューアル',
+    desc: '全6ページをフルスタック〜CMS化まで実装',
+    img: './images/串かつ.png',
+    link: './work9.html',
+  },
+  {
+    id: 'work11.html',
+    title: 'メディパ様（美容医療）<br>サービス全般制作',
+    desc: 'Googleのビジネスコンテストで優勝したチームのサービス',
+    img: './images/medipatop.png',
+    link: './work11.html',
+  },
+  {
+    id: 'work3.html',
+    title: 'HEART&BRAIN様 <br>LP制作',
+    desc: 'パララックス効果で奥行きのある流行のデザイン',
+    img: './images/HB.png',
+    link: './work3.html',
+  },
+  {
+    id: 'work10.html',
+    title: 'VEIN ENERGY様<br>コーポレート',
+    desc: 'ロゴ制作から実装まで3日で納品。',
+    img: './images/VE.png',
+    link: './work10.html',
+  },
+  {
     id: 'work.html',
-    title: 'ぎふ就労支援センター様 ホームページリニューアル',
-    desc: 'WordPressを活用したレスポンシブWebサイトの制作',
+    title: 'ぎふ就労支援センター様<br>リニューアル',
+    desc: '大規模リニューアル案件',
     img: './images/Screenshot 2025-05-07 at 17.59.08.png',
     link: './work.html',
   },
   {
-    id: 'work2.html',
-    title: '架空サイト（Fashion）',
-    desc: 'ファッションブランドのコンセプトサイト',
-    img: './images/FashonTOP.png',
-    link: './work2.html',
-  },
-  {
-    id: 'work3.html',
-    title: 'MISSIONA様 LP制作',
-    desc: 'コンバージョンを重視したランディングページ',
-    img: './images/MPC.png',
-    link: './work3.html',
-  },
-  {
-    id: 'work4.html',
-    title: 'コンサル系ブログ リニューアル',
-    desc: 'ユーザビリティを重視したブログサイトの改善',
-    img: './images/HIROMOZA.png',
-    link: './work4.html',
-  },
-  {
     id: 'work5.html',
-    title: 'Coffee コーポレートサイト',
+    title: 'Coffee <br>コーポレート',
     desc: 'Reactを使用したモダンなコーポレートサイト',
     img: './images/Screenshot 2025-07-13 at 8.58.05.png',
     link: './work5.html',
-  },
-  {
-    id: 'work6.html',
-    title: '就労継続ナビ様　Blog',
-    desc: '地域情報発信のためのブログサイト運営',
-    img: './images/Navi.png',
-    link: './work6.html',
-  },
-  {
-    id: 'work7.html',
-    title: 'WPカスタムテンプレート作成',
-    desc: 'WordPressカスタムテーマ制作の基礎学習',
-    img: './images/Custom.png',
-    link: './work7.html',
-  },
-  {
-    id: 'work8.html',
-    title: 'ポートフォリオサイト制作・運用',
-    desc: '自身のスキル・実績・価値観をまとめた自己紹介用ポートフォリオサイト',
-    img: './images/PF.png',
-    link: './work8.html',
   },
 ];
 
@@ -284,9 +270,11 @@ function renderOtherWorksSlider(currentId) {
   workList.filter(w => w.id !== currentId).forEach(work => {
     const card = document.createElement('article');
     card.className = 'work-card';
+    const imgStyle = (work.img.includes('串かつ') || work.img.includes('medipatop') || work.img.includes('VE.png')) 
+      ? 'style="object-position: center top;"' : '';
     card.innerHTML = `
       <div class="work-image">
-        <img src="${work.img}" alt="${work.title}" loading="lazy">
+        <img src="${work.img}" alt="${work.title}" loading="lazy" ${imgStyle}>
         <div class="work-overlay">
           <a href="${work.link}" class="work-link">詳細を見る</a>
         </div>
