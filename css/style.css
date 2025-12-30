@@ -468,6 +468,9 @@ button:hover ~ #art-cursor,
   border: 1px solid var(--color-cool-gray);
   transition: var(--transition);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .work-card:hover {
@@ -476,10 +479,17 @@ button:hover ~ #art-cursor,
   border-color: var(--color-primary-green);
 }
 
+/* 詳細リンクホバー時はオーバーレイを非表示 */
+.work-card:has(.work-detail-link:hover) .work-overlay {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
 .work-image {
   position: relative;
   overflow: hidden;
   aspect-ratio: 16/10;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .work-image img {
@@ -495,7 +505,8 @@ button:hover ~ #art-cursor,
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(56, 161, 105, 0.9);
+  /* カードhover時の背景色あり（ユーザー要望） */
+  background: rgba(56, 161, 105, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -512,22 +523,138 @@ button:hover ~ #art-cursor,
 }
 
 .work-link {
-  color: var(--color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  /* オーバーレイ上でも常に視認できる配色 */
+  color: #166534;
   font-weight: 600;
   text-decoration: none;
-  padding: var(--space-4) var(--space-6);
-  border: 2px solid var(--color-white);
-  border-radius: var(--border-radius-sm);
-  transition: var(--transition);
+  padding: 1em 2.2em;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.35s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.35s cubic-bezier(.2,.8,.2,1),
+    border-color 0.35s cubic-bezier(.2,.8,.2,1),
+    color 0.25s ease,
+    background-color 0.25s ease;
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 斜めワイプで塗りが入る */
+.work-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 140%;
+  height: 100%;
+  /* ホバー時の塗りは“濃色”にしてオーバーレイ上でも埋もれない */
+  background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(22, 101, 52, 0.95) 100%);
+  transform: translateX(-110%) skewX(-18deg);
+  transition: transform 0.55s cubic-bezier(.77,0,.18,1);
+  z-index: -1;
+}
+
+.work-link:hover::before {
+  transform: translateX(0) skewX(-18deg);
+}
+
+/* 矢印アイコン */
+.work-link::after {
+  content: '↗';
+  font-size: 1em;
+  opacity: 0;
+  transform: translateX(-10px) translateY(10px) rotate(-20deg);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), opacity 0.25s ease;
 }
 
 .work-link:hover {
-  background: var(--color-white);
-  color: var(--color-primary-green);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+}
+
+.work-link:hover::after {
+  opacity: 1;
+  transform: translateX(0) translateY(0) rotate(0deg);
+}
+
+.work-link:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 3px;
+}
+
+/* カード下部の詳細リンク */
+.work-detail-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: var(--color-charcoal);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  transition: all 0.3s ease;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.work-detail-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-primary-green) 0%, #2f855a 100%);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.work-detail-link:hover::before {
+  left: 0;
+}
+
+.work-detail-link span {
+  position: relative;
+  z-index: 1;
+}
+
+.work-detail-link:hover {
+  color: var(--color-white);
+}
+
+.work-detail-link span:last-child {
+  transition: transform 0.3s ease;
+}
+
+.work-detail-link:hover span:last-child {
+  transform: translateX(4px);
 }
 
 .work-content {
   padding: var(--space-6);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .work-title {
@@ -548,6 +675,7 @@ button:hover ~ #art-cursor,
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  margin-top: auto;
 }
 
 .tag {

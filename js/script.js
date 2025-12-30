@@ -220,11 +220,25 @@ window.addEventListener('DOMContentLoaded', () => {
 // ===== Other Works（全workページ共通）自動生成 =====
 const workList = [
   {
+    id: 'work13.html',
+    title: '書籍横断検索アプリ',
+    desc: '複数の図書館・書店を一括検索できるWebアプリ',
+    img: './images/booksearch.png',
+    link: './work13.html',
+  },
+  {
     id: 'work9.html',
     title: '串かつ さじろう様<br>リニューアル',
     desc: '全6ページをフルスタック〜CMS化まで実装',
     img: './images/串かつ.png',
     link: './work9.html',
+  },
+  {
+    id: 'work12.html',
+    title: '五料産業株式会社様<br>コーポレートサイト制作',
+    desc: 'Figmaで作成されたデザインを忠実に再現。2つのデザイン案を実装',
+    img: './images/Screenshot 2025-12-30 at 5.31.09.png',
+    link: './work12.html',
   },
   {
     id: 'work11.html',
@@ -260,13 +274,6 @@ const workList = [
     desc: 'Reactを使用したモダンなコーポレートサイト',
     img: './images/Screenshot 2025-07-13 at 8.58.05.png',
     link: './work5.html',
-  },
-  {
-    id: 'work12.html',
-    title: '五料産業株式会社様<br>コーポレートサイト制作',
-    desc: 'Figmaで作成されたデザインを忠実に再現。2つのデザイン案を実装',
-    img: './images/Screenshot 2025-12-30 at 5.31.09.png',
-    link: './work12.html',
   },
 ];
 
