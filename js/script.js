@@ -975,6 +975,64 @@ document.addEventListener('DOMContentLoaded', () => {
         counterObserver.observe(counter);
     });
 
+    // ===== タイムラインのスクロール連動アニメーション =====
+    function initTimelineScroll() {
+        const timeline = document.querySelector('.timeline');
+        if (!timeline) return;
+
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        function updateTimelineProgress() {
+            const rect = timeline.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // タイムラインが画面内に入ってから計算開始
+            const startOffset = windowHeight * 0.6; // 画面の60%の位置で開始
+            const timelineTop = rect.top;
+            const timelineHeight = rect.height;
+            
+            // 進行率を計算 (0% 〜 100%)
+            let progress = (startOffset - timelineTop);
+            
+            // 範囲制限
+            if (progress < 0) progress = 0;
+            if (progress > timelineHeight) progress = timelineHeight;
+            
+            // 進行バーの高さを更新
+            timeline.style.setProperty('--line-height', `${progress}px`);
+            
+            // CSS変数を使って疑似要素の高さを制御するためにstyleタグを追加または更新
+            let styleEl = document.getElementById('timeline-dynamic-style');
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = 'timeline-dynamic-style';
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = `.timeline::after { height: ${progress}px !important; }`;
+
+            // 各アイテムのアクティブ状態を更新
+            timelineItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top - timeline.getBoundingClientRect().top;
+                
+                // 線がアイテムの位置を超えたらアクティブ
+                if (progress >= itemTop) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(updateTimelineProgress);
+        }, { passive: true });
+        
+        // 初回実行
+        updateTimelineProgress();
+    }
+
+    initTimelineScroll();
+
     // ===== パフォーマンス最適化 =====
     
     // Reduced Motion対応

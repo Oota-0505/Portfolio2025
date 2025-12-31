@@ -866,6 +866,7 @@ button:hover ~ #art-cursor,
   padding-left: var(--space-8);
 }
 
+/* ベースの線（グレー） */
 .timeline::before {
   content: '';
   position: absolute;
@@ -873,14 +874,30 @@ button:hover ~ #art-cursor,
   top: 0;
   bottom: 0;
   width: 2px;
+  background: var(--color-cool-gray); /* グレーに変更 */
+  z-index: 0;
+}
+
+/* 進行バー（緑） */
+.timeline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 0; /* JSで制御 */
   background: var(--color-primary-green);
+  z-index: 1;
+  transition: height 0.1s linear;
 }
 
 .timeline-item {
   position: relative;
   margin-bottom: var(--space-8);
+  transition: opacity 0.5s ease;
 }
 
+/* ドット（初期状態：グレー） */
 .timeline-item::before {
   content: '';
   position: absolute;
@@ -888,16 +905,29 @@ button:hover ~ #art-cursor,
   top: 0;
   width: 12px;
   height: 12px;
-  background: var(--color-primary-green);
+  background: var(--color-cool-gray); /* グレー */
   border-radius: 50%;
   border: 3px solid var(--color-white);
+  z-index: 2;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* アクティブなドット（緑） */
+.timeline-item.active::before {
+  background: var(--color-primary-green);
+  transform: scale(1.2);
 }
 
 .timeline-date {
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-primary-green);
+  color: var(--color-warm-gray); /* 初期グレー */
   margin-bottom: var(--space-2);
+  transition: color 0.3s ease;
+}
+
+.timeline-item.active .timeline-date {
+  color: var(--color-primary-green);
 }
 
 .timeline-content h5 {
